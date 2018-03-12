@@ -39,16 +39,19 @@ public class KundenInfoView extends JFrame{
 	private static final int FRAME_WIDTH = 480;
 	private static final int FRAME_HEIGHT = 450;
 	private static Controler controler;
+	private static String title;
 	
 	
 	
-    public static JComboBox getComboAuswahlFarzeug() {
+    
+
+	public static JComboBox getComboAuswahlFarzeug() {
 		return comboAuswahlFarzeug;
 	}
 
-	public KundenInfoView(String title) {
+	public KundenInfoView() {
 
-    	super(title);
+    	super("Taxi");
     	kundeninfo = new KundenInfo();
     	createTextFields();
     	createLabels();
@@ -78,16 +81,7 @@ public class KundenInfoView extends JFrame{
         JSeparator separator = new JSeparator();
         separator.setBounds(27, 97, 257, 2);
         panelRechnungsübersicht.add(separator);
-        
-        String[] fahrzeugStyp = {"Normales Taxi", "Grosses Taxi", "Stechlimosine"};
-        comboAuswahlFarzeug = new JComboBox(fahrzeugStyp);
-        comboAuswahlFarzeug.setBounds(33, 54, 46, 23);
-    	Controler controler = new Controler();
-    	comboAuswahlFarzeug.setSelectedIndex(2);
-        comboAuswahlFarzeug.addActionListener(controler);
-        
-    	
-    	
+ 
     	getContentPane().add(btnBerechnen);
     	getContentPane().add(btnDruecken);
     	getContentPane().add(btgnNeu);
@@ -99,18 +93,17 @@ public class KundenInfoView extends JFrame{
     private static void createTextFields() {
     	
        	txtDisplayEnt = new JTextField();
-        txtDisplayFgaeste = new JTextField();
-        txtDisplayFgaeste = new JTextField();
+       	txtDisplayEnt.addActionListener(controler);
         txtEntfernung  = new JTextField();
-        txtEntfernung.setBounds(341, 64, 63, 20);
         txtDisplayFgaeste  = new JTextField();
         txtDisplayFgaeste.setBounds(366, 163, 38, 23);
+        txtDisplayFgaeste.addActionListener(controler);
 
     }
     private static void createLabels() {
     	lbEntfernung = new JLabel("Entfehrnung in km");
     	lbEntfernung.setFont(new Font("Tahoma", Font.BOLD, 11));
-    	lbEntfernung.setBounds(27, 61, 141, 23);
+    	lbEntfernung.setBounds(27, 63, 141, 23);
     	lbFahrgaeste = new JLabel("Fahrgaeste");
     	lbFahrgaeste.setFont(new Font("Tahoma", Font.BOLD, 11));
     	lbFahrgaeste.setBounds(282, 160, 74, 29);
@@ -173,9 +166,11 @@ public class KundenInfoView extends JFrame{
     	panelRechnungsübersicht.setBorder(new TitledBorder(null, "Rechnungsübersicht", TitledBorder.LEADING, TitledBorder.TOP, null, null));
     	panelRechnungsübersicht.setLayout(null);
     	
-  
-    	comboAuswahlFarzeug = new JComboBox();
-    	comboAuswahlFarzeug.setBounds(242, 26, 162, 23);
+        String[] fahrzeugStyp = {"Normales Taxi", "Grosses Taxi", "Stechlimosine"};
+    	comboAuswahlFarzeug = new JComboBox(fahrzeugStyp);
+    	comboAuswahlFarzeug.setSelectedIndex(2);
+    	comboAuswahlFarzeug.setBounds(242, 30, 162, 23);
+    	comboAuswahlFarzeug.addActionListener(controler);
     	panelEingabe.add(lbEntfernung);
     	cbNacht = new JCheckBox("Nachtfahrt (Zuschlag 10 %)");
     	cbNacht.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -196,7 +191,104 @@ public class KundenInfoView extends JFrame{
     
     	
     }
-   
 
+	public static JTextField getTxtDisplayEnt() {
+		return txtDisplayEnt;
+	}
+
+	public static JTextField getTxtBrutto() {
+		return txtBrutto;
+	}
+
+	public static JTextField getTxtMSteuer() {
+		return txtMSteuer;
+	}
+
+	public static JTextField getTxtNetto() {
+		return txtNetto;
+	}
+
+	public static JTextField getTxtDisplayFgaeste() {
+		return txtDisplayFgaeste;
+	}
+
+	public static JTextField getTxtEntfernung() {
+		return txtEntfernung;
+	}
+
+	public static JLabel getLbAuswahl() {
+		return lbAuswahl;
+	}
+
+	public static JLabel getLbEntfernung() {
+		return lbEntfernung;
+	}
+
+	public static JLabel getLbFahrgaeste() {
+		return lbFahrgaeste;
+	}
+
+	public static JLabel getLbNetto() {
+		return lbNetto;
+	}
+
+	public static JLabel getLbMWSteuer() {
+		return lbMWSteuer;
+	}
+
+	public static JLabel getLbBrutto() {
+		return lbBrutto;
+	}
+
+	public static KundenInfo getKundeninfo() {
+		return kundeninfo;
+	}
+
+	public static JPanel getPanelEingabe() {
+		return panelEingabe;
+	}
+
+	public static JPanel getPanelRechnungsübersicht() {
+		return panelRechnungsübersicht;
+	}
+
+	public static JCheckBox getCbNacht() {
+		return cbNacht;
+	}
+
+	public static JCheckBox getCbKindersitz() {
+		return cbKindersitz;
+	}
+
+	public static JCheckBox getCbBar() {
+		return cbBar;
+	}
+
+	public static JButton getBtnBerechnen() {
+		return btnBerechnen;
+	}
+
+	public static JButton getBtnDruecken() {
+		return btnDruecken;
+	}
+
+	public static JButton getBtgnNeu() {
+		return btgnNeu;
+	}
+
+	public static JButton getBtnEnde() {
+		return btnEnde;
+	}
+
+	public static Controler getControler() {
+		return controler;
+	}
+
+	public static void setComboAuswahlFarzeug(JComboBox comboAuswahlFarzeug) {
+		KundenInfoView.comboAuswahlFarzeug = comboAuswahlFarzeug;
+	}
+	
+	
+   
 }
 

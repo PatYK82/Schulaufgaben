@@ -24,7 +24,9 @@ public class Controler implements ActionListener{
 	public  void actionPerformed(ActionEvent e) {
 		//bye();
 		JComboBox cb = (JComboBox)e.getSource();
-		String fahrzeugstyp = (String)cb.getSelectedItem();
+		String fahrzeugtyp = (String)cb.getSelectedItem();
+		
+		
 		
 	
 	}
@@ -38,9 +40,10 @@ public class Controler implements ActionListener{
 		
 	}
 	public void addActioncomboBox() {
-
-		String[] fahrzeugStyp = {"Normales Taxi", "Grosses Taxi", "Stechlimosine"};
-		JComboBox comboAuswahlFarzeug = new JComboBox(fahrzeugStyp);
+		
 	}
-
+	//public double getBerechnungen() {
+		//String eingabe1 = view.getTxtDisplayEnt().getText();
+		//String eingabe2 = view.getTxtDisplayFgaeste().getText();
+	//}
 }

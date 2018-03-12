@@ -1,7 +1,7 @@
 package conrtoler;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
+import view.KundenInfoView;
 
 import view.KundenInfoView;
 
@@ -11,7 +11,7 @@ public class KundenInfoProgram {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				
-				KundenInfoView kundenInfoView = new KundenInfoView("Taxi");
+				KundenInfoView kundenInfoView = new KundenInfoView();
 				kundenInfoView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				kundenInfoView.setVisible(true);
 				

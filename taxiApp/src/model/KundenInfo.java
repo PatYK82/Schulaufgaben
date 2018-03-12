@@ -1,5 +1,8 @@
 package model;
 
+import conrtoler.Controler;
+import view.KundenInfoView;
+
 public class KundenInfo {
 	
 	
@@ -11,6 +14,8 @@ public class KundenInfo {
 	private static final double MEHRWERTSTEUER = 1.7;
 	private static final double BARPREIS = 15;
 	private static final double KINDERSITZPREIS = 1;
+	private static KundenInfoView kundenInfoView;
+	private static Controler comtroler;
 	
 	
 	public KundenInfo() {
@@ -53,7 +58,7 @@ public static double getMehrwertsteuer() {
 	public double getBrutto(String fahrzeugtyp, boolean kindersitz, boolean nachtzuschlag, 
 			boolean bar, double strecke, int anzahlFahrgäste) {
 		double streckenPreis = 0; 
-		double betrag = ANFAHRTPAUSCHAL + streckenPreis*strecke;
+		double betrag = ANFAHRTPAUSCHAL + streckenPreis* Double.parseDouble(kundenInfoView.getTxtDisplayEnt().getText());
 		
 		
 		switch(fahrzeugtyp) {
@@ -74,12 +79,10 @@ public static double getMehrwertsteuer() {
 		if(nachtzuschlag)
 			streckenPreis *= NACHTZUSCHLAGPROKILOMETER   ;
 		if(bar) 
-			betrag += anzahlFahrgäste * BARPREIS;
+			betrag += Double.parseDouble(kundenInfoView.getTxtDisplayFgaeste().getText()) * BARPREIS;
 		
 	
-		
-		
-			return betrag;
+		return betrag;
 	}
 	public double getSteuer(String fahrzeugtyp, boolean kindersitz, boolean nachtzuschlag, 
 			boolean bar, double strecke, int anzahlFahrgäste) {
@@ -96,7 +99,6 @@ public static double getMehrwertsteuer() {
 				bar,strecke,anzahlFahrgäste);
 		return netto;
 	}
-	
 	
 	
 	
