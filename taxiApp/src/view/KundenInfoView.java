@@ -20,7 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
 
-import conrtoler.Controler;
+import conrtoler.Controller;
 import model.KundenInfo;
 import javax.swing.border.EtchedBorder;
 
@@ -35,10 +35,10 @@ public class KundenInfoView extends JFrame{
 	private static ButtonGroup bg;
 	private static JCheckBox cbNacht,cbKindersitz,cbBar;	
 	private static JComboBox comboAuswahlFarzeug;
-	private static JButton btnBerechnen,btnDruecken,btgnNeu,btnEnde;
+	private static JButton btnBerechnen,btnDruecken,btnNeu,btnEnde;
 	private static final int FRAME_WIDTH = 480;
 	private static final int FRAME_HEIGHT = 450;
-	private static Controler controler;
+	private static Controller controller;
 	private static String title;
 	
 	
@@ -84,7 +84,7 @@ public class KundenInfoView extends JFrame{
  
     	getContentPane().add(btnBerechnen);
     	getContentPane().add(btnDruecken);
-    	getContentPane().add(btgnNeu);
+    	getContentPane().add(btnNeu);
     	getContentPane().add(btnEnde);
 				
 
@@ -93,11 +93,14 @@ public class KundenInfoView extends JFrame{
     private static void createTextFields() {
     	
        	txtDisplayEnt = new JTextField();
-       	txtDisplayEnt.addActionListener(controler);
+       	txtDisplayEnt.addActionListener(controller);
         txtEntfernung  = new JTextField();
+        txtEntfernung.setBounds(299, 63, 105, 23);
+        txtEntfernung.setHorizontalAlignment(txtEntfernung.RIGHT);
         txtDisplayFgaeste  = new JTextField();
+        txtDisplayFgaeste.setHorizontalAlignment(txtDisplayFgaeste.RIGHT);
         txtDisplayFgaeste.setBounds(366, 163, 38, 23);
-        txtDisplayFgaeste.addActionListener(controler);
+        txtDisplayFgaeste.addActionListener(controller);
 
     }
     private static void createLabels() {
@@ -139,20 +142,21 @@ public class KundenInfoView extends JFrame{
     
     private static void createButtons() {
     	btnBerechnen = new JButton("Berechenen");
-        controler = new Controler();
-    	//btnBerechnen.addActionListener();
+    	btnBerechnen.addActionListener(controller);
     	btnBerechnen.setFont(new Font("Tahoma", Font.BOLD, 11));
     	btnBerechnen.setBounds(314, 240, 133, 23);
     	btnDruecken = new JButton("Drucken");
     	btnDruecken.setFont(new Font("Tahoma", Font.BOLD, 11));
     	btnDruecken.setBounds(314, 284, 133, 23);
-    	btgnNeu = new JButton("Neu");
-    	btgnNeu.setFont(new Font("Tahoma", Font.BOLD, 11));
-    	btgnNeu.setBounds(314, 318, 133, 23);
+    	btnDruecken.addActionListener(controller);
+    	btnNeu = new JButton("Neu");
+    	btnNeu.setFont(new Font("Tahoma", Font.BOLD, 11));
+    	btnNeu.setBounds(314, 318, 133, 23);
+    	btnNeu.addActionListener(controller);
     	btnEnde = new JButton("Ende");
     	btnEnde.setFont(new Font("Tahoma", Font.BOLD, 11));
     	btnEnde.setBounds(314, 353, 133, 23);
-    	btnEnde.addActionListener(controler);
+    	btnEnde.addActionListener(controller);
     
      }
     
@@ -170,7 +174,7 @@ public class KundenInfoView extends JFrame{
     	comboAuswahlFarzeug = new JComboBox(fahrzeugStyp);
     	comboAuswahlFarzeug.setSelectedIndex(2);
     	comboAuswahlFarzeug.setBounds(242, 30, 162, 23);
-    	comboAuswahlFarzeug.addActionListener(controler);
+    	comboAuswahlFarzeug.addActionListener(controller);
     	panelEingabe.add(lbEntfernung);
     	cbNacht = new JCheckBox("Nachtfahrt (Zuschlag 10 %)");
     	cbNacht.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -272,16 +276,16 @@ public class KundenInfoView extends JFrame{
 		return btnDruecken;
 	}
 
-	public static JButton getBtgnNeu() {
-		return btgnNeu;
+	public static JButton getBtnNeu() {
+		return btnNeu;
 	}
 
 	public static JButton getBtnEnde() {
 		return btnEnde;
 	}
 
-	public static Controler getControler() {
-		return controler;
+	public static Controller getControler() {
+		return controller;
 	}
 
 	public static void setComboAuswahlFarzeug(JComboBox comboAuswahlFarzeug) {

@@ -6,9 +6,12 @@ public class TaxiMain {
 		
 		KundenInfo info = new KundenInfo();
 		
-		System.out.println("Netto: " + info.getNetto("Strechlimosine",false,true,true,15,5));
-		System.out.println("Brutto: " + info.getBrutto("Strechlimosine",false,true,true,15,5));
-		System.out.println("Steuer: " + info.getSteuer("Strechlimosine",false,true,true,15,5));
+		System.out.println("Nettobetrag: " + info.getNetto("Strechlimosine",false,true,true,info.getBarpreis(),5));
+		System.out.println("Mehrwertsteuer: " + info.getSteuer("Strechlimosine",false,true,true,15,5));
+		System.out.println("-----------------------------------------------------------------------");
+		System.out.println("Bruttobetrag: " + info.getBrutto("Strechlimosine",false,true,true,15,5));
+		
+		
 
 	}
 

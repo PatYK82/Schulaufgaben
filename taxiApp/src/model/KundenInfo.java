@@ -1,6 +1,6 @@
 package model;
 
-import conrtoler.Controler;
+import conrtoler.Controller;
 import view.KundenInfoView;
 
 public class KundenInfo {
@@ -11,56 +11,54 @@ public class KundenInfo {
 	private static final double GROSSRAUMTAXIKILOMETERPREIS = 1;
 	private static final double STRECHLIMOSINEKILOMETERPREIS = 2;
 	private static final double NACHTZUSCHLAGPROKILOMETER = 0.1;
-	private static final double MEHRWERTSTEUER = 1.7;
+	private static final double MEHRWERTSTEUER = 0.07;
 	private static final double BARPREIS = 15;
 	private static final double KINDERSITZPREIS = 1;
-	private static KundenInfoView kundenInfoView;
-	private static Controler comtroler;
+	private KundenInfoView kundenInfoView;
+	private Controller controller;
 	
 	
 	public KundenInfo() {
 	
 	}
 
-public static double getMehrwertsteuer() {
+public double getMehrwertsteuer() {
 		return MEHRWERTSTEUER;
 	}
 
 
-	public static double getAnfahrtpauschal() {
+	public double getAnfahrtpauschal() {
 		return ANFAHRTPAUSCHAL;
 	}
 
-	public static double getNormalestaxikilometerpreis() {
+	public double getNormalestaxikilometerpreis() {
 		return NORMALESTAXIKILOMETERPREIS;
 	}
 
-	public static double getGrossraumtaxikilometerpreis() {
+	public double getGrossraumtaxikilometerpreis() {
 		return GROSSRAUMTAXIKILOMETERPREIS;
 	}
 
-	public static double getStrechlimosinekilometerpreis() {
+	public double getStrechlimosinekilometerpreis() {
 		return STRECHLIMOSINEKILOMETERPREIS;
 	}
 
-	public static double getNachtzuschlagprokilometer() {
+	public double getNachtzuschlagprokilometer() {
 		return NACHTZUSCHLAGPROKILOMETER;
 	}
 
-	public static double getBarpreis() {
+	public double getBarpreis() {
 		return BARPREIS;
 	}
 
-	public static double getKindersitzpreis() {
+	public double getKindersitzpreis() {
 		return KINDERSITZPREIS;
 	}
 
 	public double getBrutto(String fahrzeugtyp, boolean kindersitz, boolean nachtzuschlag, 
-			boolean bar, double strecke, int anzahlFahrgäste) {
+			boolean bar, double strecke, int anzahlFahrgaeste) {
+		
 		double streckenPreis = 0; 
-		double betrag = ANFAHRTPAUSCHAL + streckenPreis* Double.parseDouble(kundenInfoView.getTxtDisplayEnt().getText());
-		
-		
 		switch(fahrzeugtyp) {
 			case "Normalestaxi": 
 				streckenPreis = NORMALESTAXIKILOMETERPREIS;
@@ -72,23 +70,23 @@ public static double getMehrwertsteuer() {
 				streckenPreis = STRECHLIMOSINEKILOMETERPREIS;
 				break;
 		}
-	
+		double betrag = ANFAHRTPAUSCHAL + streckenPreis*strecke;
 		
 		if(kindersitz)
 			betrag += KINDERSITZPREIS;
 		if(nachtzuschlag)
 			streckenPreis *= NACHTZUSCHLAGPROKILOMETER   ;
 		if(bar) 
-			betrag += Double.parseDouble(kundenInfoView.getTxtDisplayFgaeste().getText()) * BARPREIS;
+			betrag += anzahlFahrgaeste * BARPREIS;
 		
 	
 		return betrag;
 	}
 	public double getSteuer(String fahrzeugtyp, boolean kindersitz, boolean nachtzuschlag, 
-			boolean bar, double strecke, int anzahlFahrgäste) {
+			boolean bar, double strecke, int anzahlFahrgaeste) {
 		
 		double mehrwertsteur = getBrutto(fahrzeugtyp,kindersitz,nachtzuschlag,
-				bar,strecke,anzahlFahrgäste)*MEHRWERTSTEUER;
+				bar,strecke,anzahlFahrgaeste)*MEHRWERTSTEUER;
 		return mehrwertsteur;
 	}
 	public double getNetto(String fahrzeugtyp, boolean kindersitz, boolean nachtzuschlag, 
