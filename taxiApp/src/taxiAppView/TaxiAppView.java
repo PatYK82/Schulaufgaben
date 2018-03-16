@@ -1,4 +1,4 @@
-package view;
+package taxiAppView;
 
 import java.awt.EventQueue;
 
@@ -20,39 +20,34 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
 
-import conrtoler.Controller;
-import model.KundenInfo;
+import taxiappinterface.TaxiAppPresenterInterface;
+import taxiappinterface.TaxiAppViewInterface;
+
 import javax.swing.border.EtchedBorder;
 
-public class KundenInfoView extends JFrame{
+public class TaxiAppView extends JFrame implements TaxiAppViewInterface{
 	
 	
 	private static JTextField txtDisplayEnt,txtBrutto,
 	txtMSteuer,txtNetto,txtDisplayFgaeste, txtEntfernung;
 	private static JLabel lbAuswahl,lbEntfernung,lbFahrgaeste,lbNetto,lbMWSteuer,lbBrutto;
-	private static KundenInfo kundeninfo;
 	private static JPanel panelEingabe,panelRechnungsübersicht;
 	private static ButtonGroup bg;
 	private static JCheckBox cbNacht,cbKindersitz,cbBar;	
 	private static JComboBox comboAuswahlFarzeug;
-	private static JButton btnBerechnen,btnDruecken,btnNeu,btnEnde;
+	private static JButton btnBerechnen,btnDrucken,btnNeu,btnEnde;
 	private static final int FRAME_WIDTH = 480;
 	private static final int FRAME_HEIGHT = 450;
-	private static Controller controller;
-	private static String title;
 	
+	private TaxiAppPresenterInterface taxiPresenter;
 	
-	
-    
-
 	public static JComboBox getComboAuswahlFarzeug() {
 		return comboAuswahlFarzeug;
 	}
 
-	public KundenInfoView() {
+	public TaxiAppView() {
 
     	super("Taxi");
-    	kundeninfo = new KundenInfo();
     	createTextFields();
     	createLabels();
     	createCheckBox();
@@ -83,7 +78,7 @@ public class KundenInfoView extends JFrame{
         panelRechnungsübersicht.add(separator);
  
     	getContentPane().add(btnBerechnen);
-    	getContentPane().add(btnDruecken);
+    	getContentPane().add(btnDrucken);
     	getContentPane().add(btnNeu);
     	getContentPane().add(btnEnde);
 				
@@ -93,14 +88,13 @@ public class KundenInfoView extends JFrame{
     private static void createTextFields() {
     	
        	txtDisplayEnt = new JTextField();
-       	txtDisplayEnt.addActionListener(controller);
         txtEntfernung  = new JTextField();
         txtEntfernung.setBounds(299, 63, 105, 23);
         txtEntfernung.setHorizontalAlignment(txtEntfernung.RIGHT);
         txtDisplayFgaeste  = new JTextField();
         txtDisplayFgaeste.setHorizontalAlignment(txtDisplayFgaeste.RIGHT);
         txtDisplayFgaeste.setBounds(366, 163, 38, 23);
-        txtDisplayFgaeste.addActionListener(controller);
+      
 
     }
     private static void createLabels() {
@@ -138,25 +132,27 @@ public class KundenInfoView extends JFrame{
         cbKindersitz = new JCheckBox("Kindersitz (Zuschlag 1 €)");
         cbKindersitz.setFont(new Font("Tahoma", Font.BOLD, 11));
         cbKindersitz.setBounds(27, 137, 178, 25);
+        cbNacht = new JCheckBox("Nachtfahrt (Zuschlag 10 %)");
+    	cbNacht.setFont(new Font("Tahoma", Font.BOLD, 11));
+    	cbNacht.setBounds(27, 93, 194, 23);
+    	
     }
     
     private static void createButtons() {
+    	
     	btnBerechnen = new JButton("Berechenen");
-    	btnBerechnen.addActionListener(controller);
     	btnBerechnen.setFont(new Font("Tahoma", Font.BOLD, 11));
     	btnBerechnen.setBounds(314, 240, 133, 23);
-    	btnDruecken = new JButton("Drucken");
-    	btnDruecken.setFont(new Font("Tahoma", Font.BOLD, 11));
-    	btnDruecken.setBounds(314, 284, 133, 23);
-    	btnDruecken.addActionListener(controller);
+    	btnDrucken = new JButton("Drucken");
+    	btnDrucken.setFont(new Font("Tahoma", Font.BOLD, 11));
+    	btnDrucken.setBounds(314, 284, 133, 23);
     	btnNeu = new JButton("Neu");
     	btnNeu.setFont(new Font("Tahoma", Font.BOLD, 11));
     	btnNeu.setBounds(314, 318, 133, 23);
-    	btnNeu.addActionListener(controller);
     	btnEnde = new JButton("Ende");
     	btnEnde.setFont(new Font("Tahoma", Font.BOLD, 11));
     	btnEnde.setBounds(314, 353, 133, 23);
-    	btnEnde.addActionListener(controller);
+    
     
      }
     
@@ -174,11 +170,8 @@ public class KundenInfoView extends JFrame{
     	comboAuswahlFarzeug = new JComboBox(fahrzeugStyp);
     	comboAuswahlFarzeug.setSelectedIndex(2);
     	comboAuswahlFarzeug.setBounds(242, 30, 162, 23);
-    	comboAuswahlFarzeug.addActionListener(controller);
     	panelEingabe.add(lbEntfernung);
-    	cbNacht = new JCheckBox("Nachtfahrt (Zuschlag 10 %)");
-    	cbNacht.setFont(new Font("Tahoma", Font.BOLD, 11));
-    	cbNacht.setBounds(27, 93, 194, 23);
+    	
     	panelEingabe.add(cbNacht);
     	panelEingabe.add(cbKindersitz);
     	panelEingabe.add(cbBar);
@@ -244,8 +237,8 @@ public class KundenInfoView extends JFrame{
 		return lbBrutto;
 	}
 
-	public static KundenInfo getKundeninfo() {
-		return kundeninfo;
+	public static TaxiAppView getKundeninfo() {
+		return getKundeninfo();
 	}
 
 	public static JPanel getPanelEingabe() {
@@ -272,8 +265,8 @@ public class KundenInfoView extends JFrame{
 		return btnBerechnen;
 	}
 
-	public static JButton getBtnDruecken() {
-		return btnDruecken;
+	public static JButton getBtnDrucken() {
+		return btnDrucken;
 	}
 
 	public static JButton getBtnNeu() {
@@ -284,14 +277,26 @@ public class KundenInfoView extends JFrame{
 		return btnEnde;
 	}
 
-	public static Controller getControler() {
-		return controller;
-	}
-
 	public static void setComboAuswahlFarzeug(JComboBox comboAuswahlFarzeug) {
-		KundenInfoView.comboAuswahlFarzeug = comboAuswahlFarzeug;
+		TaxiAppView.comboAuswahlFarzeug = comboAuswahlFarzeug;
 	}
 	
+	@Override
+	public TaxiAppPresenterInterface getPresenter() {
+		return taxiPresenter;
+	}
+	@Override
+	public void setPresenter(TaxiAppPresenterInterface taxiPresenter) {
+		this.taxiPresenter = taxiPresenter;
+	}
+	@Override
+	public void updateModelFromView() {
+		
+	}
+	@Override
+	public void updateViewFromModel() {
+		
+	}
 	
    
 }
