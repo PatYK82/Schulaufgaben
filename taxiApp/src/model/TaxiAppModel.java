@@ -16,7 +16,10 @@ public class TaxiAppModel implements TaxiAppModelInterface{
 	private double entfernung;
 	private double fahrgaeste;
 	private String fahrzeugtyp;
-	boolean kindersitz,nachtzuschlag,bar;
+	private boolean kindersitz,nachtzuschlag,bar;
+	private double bruttobetrag;
+	private double nettobetrag;
+	private double mehrwertsteuer;
 	
 	public double getEntfernung() {
 		return entfernung;
@@ -66,12 +69,12 @@ public class TaxiAppModel implements TaxiAppModelInterface{
 		this.bar = bar;
 	}
 
-	public static double getMehrwertsteuer() {
+	public double getMehrwertsteuer() {
 		return MEHRWERTSTEUER;
 	}
 	
 	
-	TaxiAppModel(double entfernung, double fahrgaeste, String fahrzeugtyp){
+	public TaxiAppModel(double entfernung, double fahrgaeste, String fahrzeugtyp){
 		this.entfernung = entfernung;
 		this.fahrgaeste = fahrgaeste;
 		this.fahrzeugtyp = fahrzeugtyp;
@@ -80,11 +83,11 @@ public class TaxiAppModel implements TaxiAppModelInterface{
 	public double getAnfahrtpauschal() {
 		return ANFAHRTPAUSCHAL;
 	}
-
+	
 	public double getNormalestaxikilometerpreis() {
 		return NORMALESTAXIKILOMETERPREIS;
 	}
-
+	
 	public double getGrossraumtaxikilometerpreis() {
 		return GROSSRAUMTAXIKILOMETERPREIS;
 	}
@@ -92,7 +95,7 @@ public class TaxiAppModel implements TaxiAppModelInterface{
 	public double getStrechlimosinekilometerpreis() {
 		return STRECHLIMOSINEKILOMETERPREIS;
 	}
-
+	
 	public double getNachtzuschlagprokilometer() {
 		return NACHTZUSCHLAGPROKILOMETER;
 	}
@@ -100,9 +103,23 @@ public class TaxiAppModel implements TaxiAppModelInterface{
 	public double getBarpreis() {
 		return BARPREIS;
 	}
-
+	
 	public double getKindersitzpreis() {
 		return KINDERSITZPREIS;
+	}
+	@Override
+	public void setBrutto(double bruttobetrag) {
+		this.bruttobetrag = bruttobetrag;
+	}
+
+	@Override
+	public void setNetto(double nettobetrag) {
+		this.nettobetrag = nettobetrag;
+	}
+
+	@Override
+	public void setSteuer(double mehrwertsteuer) {
+		this.mehrwertsteuer = mehrwertsteuer;
 	}
 
 	@Override
@@ -120,32 +137,33 @@ public class TaxiAppModel implements TaxiAppModelInterface{
 				streckenPreis = STRECHLIMOSINEKILOMETERPREIS;
 				break;
 		}
-		double betrag = ANFAHRTPAUSCHAL + streckenPreis*entfernung;
+		 bruttobetrag = ANFAHRTPAUSCHAL + streckenPreis*entfernung;
 		
 		if(kindersitz)
-			betrag += KINDERSITZPREIS;
+			bruttobetrag += KINDERSITZPREIS;
 		if(nachtzuschlag)
 			streckenPreis *= NACHTZUSCHLAGPROKILOMETER   ;
 		if(bar) 
-			betrag += fahrgaeste * BARPREIS;
+			bruttobetrag += fahrgaeste * BARPREIS;
 		
 	
-		return betrag;
+		return bruttobetrag;
 	}
 	
 	@Override
 	public double getSteuer() {
 		
-		double mehrwertsteur = getBrutto()*MEHRWERTSTEUER;
-		return mehrwertsteur;
+		mehrwertsteuer = getBrutto()*MEHRWERTSTEUER;
+		return mehrwertsteuer;
 	}
 	@Override
 	public double getNetto() {
 		
-		double netto = getBrutto() - 
-				getSteuer();
-		return netto;
+		nettobetrag = getBrutto() - getSteuer();
+		return nettobetrag;
 	}
+
+
 	
 	
 	

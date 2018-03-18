@@ -1,7 +1,13 @@
 package taxiAppProgram;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
+
+import model.TaxiAppModel;
 import taxiAppView.TaxiAppView;
+import taxiApppresenter.TaxiAppPresenter;
+import taxiappinterface.TaxiAppModelInterface;
+import taxiappinterface.TaxiAppPresenterInterface;
+import taxiappinterface.TaxiAppViewInterface;
 
 public class KundenInfoProgram {
 	
@@ -9,9 +15,13 @@ public class KundenInfoProgram {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				
-				TaxiAppView kundenInfoView = new TaxiAppView();
-				kundenInfoView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				kundenInfoView.setVisible(true);
+				TaxiAppModelInterface taxiAppModel = new TaxiAppModel(15,5,"Stechlimosine");
+				TaxiAppPresenterInterface taxiAppPresenter = new TaxiAppPresenter();
+				taxiAppPresenter.setTaxiModel(taxiAppModel);
+				TaxiAppViewInterface taxiAppView = new TaxiAppView();
+				taxiAppPresenter.setTaxiView(taxiAppView);
+				//taxiAppView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				//taxiAppView.setVisible(true);
 				
 					
 			}

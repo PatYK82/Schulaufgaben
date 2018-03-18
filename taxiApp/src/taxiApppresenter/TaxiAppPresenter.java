@@ -36,6 +36,12 @@ public class TaxiAppPresenter implements TaxiAppPresenterInterface{
 	public void setTaxiView(TaxiAppViewInterface view) {
 		this.view = view;
 	}
+	public void run() {
+		//model.setEntfernung();
+		//model.setFahrgaeste(fahrgaeste);
+		//model.set
+		//model
+	}
 
 	/**public Controller() {
 		

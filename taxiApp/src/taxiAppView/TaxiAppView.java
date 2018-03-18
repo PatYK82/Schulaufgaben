@@ -25,25 +25,22 @@ import taxiappinterface.TaxiAppViewInterface;
 
 import javax.swing.border.EtchedBorder;
 
-public class TaxiAppView extends JFrame implements TaxiAppViewInterface{
+public class TaxiAppView extends JFrame implements TaxiAppViewInterface, ActionListener{
 	
 	
-	private static JTextField txtDisplayEnt,txtBrutto,
+	private JTextField txtDisplayEnt,txtBrutto,
 	txtMSteuer,txtNetto,txtDisplayFgaeste, txtEntfernung;
-	private static JLabel lbAuswahl,lbEntfernung,lbFahrgaeste,lbNetto,lbMWSteuer,lbBrutto;
-	private static JPanel panelEingabe,panelRechnungsübersicht;
-	private static ButtonGroup bg;
-	private static JCheckBox cbNacht,cbKindersitz,cbBar;	
-	private static JComboBox comboAuswahlFarzeug;
-	private static JButton btnBerechnen,btnDrucken,btnNeu,btnEnde;
+	private JLabel lbAuswahl,lbEntfernung,lbFahrgaeste,lbNetto,lbMWSteuer,lbBrutto;
+	private JPanel panelEingabe,panelRechnungsübersicht;
+	private ButtonGroup bg;
+	private JCheckBox cbNacht,cbBar,cbKindersitz;	
+	private JComboBox comboAuswahlFarzeug;
+	private JButton btnBerechnen,btnDrucken,btnNeu,btnEnde;
 	private static final int FRAME_WIDTH = 480;
 	private static final int FRAME_HEIGHT = 450;
 	
 	private TaxiAppPresenterInterface taxiPresenter;
 	
-	public static JComboBox getComboAuswahlFarzeug() {
-		return comboAuswahlFarzeug;
-	}
 
 	public TaxiAppView() {
 
@@ -63,14 +60,17 @@ public class TaxiAppView extends JFrame implements TaxiAppViewInterface{
         txtMSteuer = new JTextField();
         txtMSteuer.setEditable(false);
         txtMSteuer.setBounds(169, 61, 115, 20);
+        txtMSteuer.addActionListener(this);
         panelRechnungsübersicht.add(txtMSteuer);
         txtNetto = new JTextField();
         txtNetto.setEditable(false);
         txtNetto.setBounds(169, 30, 115, 20);
+        txtNetto.addActionListener(this);
         panelRechnungsübersicht.add(txtNetto);
         txtBrutto = new JTextField();
         txtBrutto.setEditable(false);
         txtBrutto.setBounds(169, 110, 115, 20);
+        txtBrutto.addActionListener(this);
         panelRechnungsübersicht.add(txtBrutto);
         
         JSeparator separator = new JSeparator();
@@ -85,19 +85,22 @@ public class TaxiAppView extends JFrame implements TaxiAppViewInterface{
 
 	}
     
-    private static void createTextFields() {
+    private void createTextFields() {
     	
-       	txtDisplayEnt = new JTextField();
+       	//txtDisplayEnt = new JTextField();
+       	
         txtEntfernung  = new JTextField();
         txtEntfernung.setBounds(299, 63, 105, 23);
         txtEntfernung.setHorizontalAlignment(txtEntfernung.RIGHT);
+        txtEntfernung.addActionListener(this);
         txtDisplayFgaeste  = new JTextField();
         txtDisplayFgaeste.setHorizontalAlignment(txtDisplayFgaeste.RIGHT);
         txtDisplayFgaeste.setBounds(366, 163, 38, 23);
+        txtDisplayFgaeste.addActionListener(this);
       
 
     }
-    private static void createLabels() {
+    private void createLabels() {
     	lbEntfernung = new JLabel("Entfehrnung in km");
     	lbEntfernung.setFont(new Font("Tahoma", Font.BOLD, 11));
     	lbEntfernung.setBounds(27, 63, 141, 23);
@@ -125,38 +128,55 @@ public class TaxiAppView extends JFrame implements TaxiAppViewInterface{
     	
     }
     
-    private static void createCheckBox() {
-        cbBar = new JCheckBox("Bar (Zuschlag 15€)");
+    private void createCheckBox() {
+       
+      
+        cbBar = new JCheckBox();
+        cbBar.setText("Bar (Zuschlag 15€)");
         cbBar.setFont(new Font("Tahoma", Font.BOLD, 11));
-        cbBar.setBounds(27, 119, 141, 15);
-        cbKindersitz = new JCheckBox("Kindersitz (Zuschlag 1 €)");
+        cbBar.setBounds(27, 137, 178, 25);
+        cbBar.setSelected(true);
+        
+        cbKindersitz = new JCheckBox();
+        cbKindersitz.setText("Kindersitz (Zuschlag 1€)");
         cbKindersitz.setFont(new Font("Tahoma", Font.BOLD, 11));
-        cbKindersitz.setBounds(27, 137, 178, 25);
-        cbNacht = new JCheckBox("Nachtfahrt (Zuschlag 10 %)");
+        cbKindersitz.setBounds(27, 119, 170, 15);
+        
+        cbNacht = new JCheckBox();
+        cbNacht.setText("Nachtfahrt (Zuschlag 10 %)");
     	cbNacht.setFont(new Font("Tahoma", Font.BOLD, 11));
     	cbNacht.setBounds(27, 93, 194, 23);
+    	cbNacht.setSelected(true);
+    	
     	
     }
     
-    private static void createButtons() {
+    private void createButtons() {
     	
-    	btnBerechnen = new JButton("Berechenen");
+    	btnBerechnen = new JButton();
+    	btnBerechnen.setText("Berechenen");
     	btnBerechnen.setFont(new Font("Tahoma", Font.BOLD, 11));
     	btnBerechnen.setBounds(314, 240, 133, 23);
-    	btnDrucken = new JButton("Drucken");
+    	btnBerechnen.addActionListener(this);
+    	btnDrucken = new JButton();
+    	btnDrucken.setText("Drucken");
     	btnDrucken.setFont(new Font("Tahoma", Font.BOLD, 11));
     	btnDrucken.setBounds(314, 284, 133, 23);
-    	btnNeu = new JButton("Neu");
+    	btnNeu = new JButton();
+    	btnNeu.setText("Neu");
     	btnNeu.setFont(new Font("Tahoma", Font.BOLD, 11));
     	btnNeu.setBounds(314, 318, 133, 23);
+    	btnNeu.addActionListener(this);
     	btnEnde = new JButton("Ende");
+    	btnEnde.setText("Ende");
     	btnEnde.setFont(new Font("Tahoma", Font.BOLD, 11));
     	btnEnde.setBounds(314, 353, 133, 23);
+    	btnEnde.addActionListener(this);
     
     
      }
     
-	private static void createPanels() {
+	private void createPanels() {
     	panelEingabe = new JPanel();
     	panelEingabe.setBounds(10, 22, 437, 200);
     	panelEingabe.setBorder(new TitledBorder(null, "Eingaben", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -189,97 +209,94 @@ public class TaxiAppView extends JFrame implements TaxiAppViewInterface{
     	
     }
 
-	public static JTextField getTxtDisplayEnt() {
+	public JTextField getTxtDisplayEnt() {
 		return txtDisplayEnt;
 	}
 
-	public static JTextField getTxtBrutto() {
+	public JTextField getTxtBrutto() {
 		return txtBrutto;
 	}
 
-	public static JTextField getTxtMSteuer() {
+	public JTextField getTxtMSteuer() {
 		return txtMSteuer;
 	}
 
-	public static JTextField getTxtNetto() {
+	public JTextField getTxtNetto() {
 		return txtNetto;
 	}
 
-	public static JTextField getTxtDisplayFgaeste() {
+	public JTextField getTxtDisplayFgaeste() {
 		return txtDisplayFgaeste;
 	}
 
-	public static JTextField getTxtEntfernung() {
+	public JTextField getTxtEntfernung() {
 		return txtEntfernung;
 	}
 
-	public static JLabel getLbAuswahl() {
+	public JLabel getLbAuswahl() {
 		return lbAuswahl;
 	}
 
-	public static JLabel getLbEntfernung() {
+	public JLabel getLbEntfernung() {
 		return lbEntfernung;
 	}
 
-	public static JLabel getLbFahrgaeste() {
+	public JLabel getLbFahrgaeste() {
 		return lbFahrgaeste;
 	}
 
-	public static JLabel getLbNetto() {
+	public JLabel getLbNetto() {
 		return lbNetto;
 	}
 
-	public static JLabel getLbMWSteuer() {
+	public JLabel getLbMWSteuer() {
 		return lbMWSteuer;
 	}
 
-	public static JLabel getLbBrutto() {
+	public JLabel getLbBrutto() {
 		return lbBrutto;
 	}
 
-	public static TaxiAppView getKundeninfo() {
+	public TaxiAppView getKundeninfo() {
 		return getKundeninfo();
 	}
 
-	public static JPanel getPanelEingabe() {
+	public JPanel getPanelEingabe() {
 		return panelEingabe;
 	}
 
-	public static JPanel getPanelRechnungsübersicht() {
+	public JPanel getPanelRechnungsübersicht() {
 		return panelRechnungsübersicht;
 	}
 
-	public static JCheckBox getCbNacht() {
+	public JCheckBox getCbNacht() {
 		return cbNacht;
 	}
 
-	public static JCheckBox getCbKindersitz() {
-		return cbKindersitz;
-	}
-
-	public static JCheckBox getCbBar() {
+	public JCheckBox getCbKindersitz() {
 		return cbBar;
 	}
 
-	public static JButton getBtnBerechnen() {
+	public JCheckBox getCbBar() {
+		return cbBar;
+	}
+
+	public JButton getBtnBerechnen() {
 		return btnBerechnen;
 	}
 
-	public static JButton getBtnDrucken() {
+	public JButton getBtnDrucken() {
 		return btnDrucken;
 	}
 
-	public static JButton getBtnNeu() {
+	public JButton getBtnNeu() {
 		return btnNeu;
 	}
 
-	public static JButton getBtnEnde() {
+	public JButton getBtnEnde() {
 		return btnEnde;
 	}
 
-	public static void setComboAuswahlFarzeug(JComboBox comboAuswahlFarzeug) {
-		TaxiAppView.comboAuswahlFarzeug = comboAuswahlFarzeug;
-	}
 	
 	@Override
 	public TaxiAppPresenterInterface getPresenter() {
@@ -291,10 +308,43 @@ public class TaxiAppView extends JFrame implements TaxiAppViewInterface{
 	}
 	@Override
 	public void updateModelFromView() {
-		
+		getPresenter().getTaxiModel().setEntfernung(Double.parseDouble(txtDisplayEnt.getText()));
+		getPresenter().getTaxiModel().setFahrgaeste(Integer.parseInt(txtDisplayFgaeste.getText()));
+		//getPresenter().getTaxiModel().setBar(cbBar);
+		//getPresenter().getTaxiModel().setKindersitz(cbKindersitz);
+		//getPresenter().getTaxiModel().setNachtzuschlag(cbNacht);
 	}
 	@Override
 	public void updateViewFromModel() {
+		
+		txtBrutto.setText(String.valueOf(getPresenter().getTaxiModel().getBrutto()));
+		txtNetto.setText(String.valueOf(getPresenter().getTaxiModel().getNetto()));
+		txtMSteuer.setText(String.valueOf(getPresenter().getTaxiModel().getSteuer()));
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		if(event.getSource() == btnEnde) {
+			System.exit(0);
+		}
+		 else if(event.getSource() == btnBerechnen) {
+			txtEntfernung.getText();
+			txtDisplayFgaeste.getText();
+			updateModelFromView();
+			updateViewFromModel();
+			//getPresenter().getTaxiModel().getBrutto();
+			//getPresenter().getTaxiModel().getNetto();
+			//getPresenter().getTaxiModel().getSteuer();
+		}
+		else if(event.getSource() == btnNeu) {
+			
+		}
+		else if(event.getSource() == btnNeu) {
+			btnNeu.setText("");
+		}
+		else if(event.getSource() == btnDrucken) {
+			
+		}
 		
 	}
 	
